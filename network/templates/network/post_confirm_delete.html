@@ -1,0 +1,10 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <form class="form-group pt-5" method="POST">
+        {% csrf_token %}
+        <p class="display-4">Are you sure you want to delete your <span class="lead">"{{ object.subject }}"</span> post?</p>
+        <a href="{{ PostDetailView.get_success_url }}" class="btn btn-secondary btn-lg mr-3">Cancel</a>
+        <input type="submit" class="btn btn-danger btn-lg" value="Confirm">
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="container p-5">
+        <h2>{{ post.subject }}</h2><h4 class="">Posted by: {{ post.created_by }}</h4>
+        <hr>
+        <form action="{% url 'network:like-post' post.pk %}" method="POST" class="p-2 m-1">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <button id="like-post-{{ post.pk }}" class="like-post btn btn-sm ml-3" name="{{ post.pk }}" onClick="likePost(this, {{ post.pk|safe }})"/><i class="bi-heart" style="font-size: 1.5rem; color: red;"></i></button>
+            <small id="likes-{{ post.pk }}" class="text-secondary"> {{ post.total_likes }} Likes</small>
+            {% endif %}
+        <div class="container">
+            <!--Message-->
+            <div id="message-{{ post.pk }}" class="alert alert-info message" role="alert">
+            </div>
+            <span id="post-body-{{ post.pk }}" class="post-body lead" value="{{ post.pk|safe }}">{{ post.body }}</span>
+        </div>
+        <hr>
+    </div>
+{% endblock %}

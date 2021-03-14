@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="container p-3">
+        <h2 class="display-4 pt-5">{{ profile.user|capfirst }}'s Profile</h2>
+        <br/>
+        <hr>
+        <div class="container">
+            <span class="lead">{{ profile.bio }}</span>
+            <span class="lead">{{ profile.website }}</span>
+        </div>
+        <hr>
+        {% if request.user.profile.id == user.profile.id %}
+        <a href="{% url 'network:profile-update' user.profile.id %}"><button class="btn btn-warning mr-3">Edit Profile</button></a>
+        <a href="{% url 'network:profile-delete' user.profile.id %}"><button class="btn btn-danger">Delete Profile</button></a>
+        {% endif %}
+    </div>
+{% endblock %}

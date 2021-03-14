@@ -1,0 +1,10 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<h2 class="display-4 pt-5">Create Profile</h2>
+    <form action="{% url 'network:profile-add' %}" class="form-group pt-5" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-outline-info" type="submit">Save Profile</button>
+    </form>
+{% endblock %}

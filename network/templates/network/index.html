@@ -1,0 +1,100 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container p-5">
+    <div id="all-posts">
+    
+    <h1 class="display-4">All Posts</h1>
+        {% if page_obj %}
+        {% for post in page_obj %}
+        <!--Begin card-->
+        <div id="card-{{ post.pk }}" class="card d-flex mt-5 p-3 shadow">
+            <blockquote class="blockquote">
+                <!--<p>Post id: {{ post.pk }}</p>-->
+                <input id="post-{{ post.pk }}" value="{{ post.pk }}" hidden>
+                {% if user.is_authenticated %}
+                    <p id="post-description-{{ post.pk }}" class="view-post lead" title="detail view of {{ post.subject }}"><small><b><a href="{% url 'network:post-detail' post.pk %}" title="post detail">{{ post.subject }}</a> / Posted by: <a href="{% url 'network:profile-detail' post.created_by.profile.pk %}" title="go to {{ post.created_by }}'s profile">{{ post.created_by }}</a></b> - {{ post.timestamp }}</small></p> 
+                    <button id="like-post-{{ post.pk }}" class="like-post btn btn-sm ml-3" name="{{ post.pk }}" onClick="likePost(this, {{ post.pk|safe }})"/><i class="bi-heart" style="font-size: 1.5rem; color: red;"></i></button>
+                    <small id="likes-{{ post.pk }}" class="text-secondary"> {{ post.total_likes }} Likes</small>
+                    
+                {% else %}
+                    <span id="post-description-{{ post.pk }}" class="view-post lead" title="detail view of {{ post.subject }}"><span>{{ post.subject }}</span> / Posted by: <span>{{ post.created_by }}</span> on {{ post.timestamp }}</span> 
+                {% endif %}
+                
+                <hr>
+                
+                <!--Message-->
+                <div id="message-{{ post.pk }}" class="alert alert-info message" role="alert">
+                </div>
+                <h1 ></h1>
+                <span id="post-body-{{ post.pk }}" class="post-body lead" value="{{ post.pk|safe }}">{{ post.body|truncatechars:250 }}</span>
+                
+                <br>
+                {% if request.user == post.created_by %}
+                    <!--Edit post button-->
+                    <button id="edit-post-{{ post.pk }}" class="btn btn-outline-primary mt-4 edit-post" value="{{ post.pk }}" name="Edit Post" onclick="getPostId(this, {{ post.pk|safe }})">Edit Post</button>
+                    <!--display save-post, only if Edit Post is pressed -->
+                    <form id="save-post-{{ post.pk }}" class="save-post" style="display:none">
+                        {% csrf_token %}
+                        <textarea class="form-control compose-body" id="compose-body-{{ post.pk }}" placeholder="Post" rows="8" height="100%;">{{ post.body }}</textarea>
+                        <!--if Edit Post pressed, display Save Changes-->
+                        <input type="submit" id="body-button-{{ post.pk }}" class="btn btn-info save-changes mt-4" value="Save Changes"/>
+                    </form>
+                {% endif %}
+            </blockquote>
+            <br/>
+        <!--End card-->
+        </div>
+        {% endfor %}
+    </div>
+    <nav aria-label="">
+        <ul class="pagination justify-content-center mt-3">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+        {% endif %}
+    
+        {% if page_obj.number|add:'-4' > 1 %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+        {% endif %}
+    
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active" aria-current="page">
+              <span class="page-link">
+                {{ i }}
+                <span class="sr-only">(current)</span>
+              </span>
+            </li>
+            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                 <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+    
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+           <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+        {% endif %}
+    
+        {% if page_obj.has_next %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% else %}
+    <h2 class="display-4">Nothing to see here...</h2>
+    {% endif %}
+    </div>
+{% endblock %}
+

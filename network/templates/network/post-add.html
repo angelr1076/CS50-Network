@@ -1,0 +1,13 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="container p-5">
+    <h2 class="display-4">Create Post</h2>
+    <hr>
+    <form action="{% url 'network:post-add' %}" class="form-group pt-5" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-outline-info" type="submit">Submit Post</button>
+    </form>
+</div>
+{% endblock %}
