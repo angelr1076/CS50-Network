@@ -9,6 +9,7 @@
         <form action="{% url 'network:follow-profile' profile.id %}" method="POST" class="p-2 m-1">
             {% csrf_token %}
             {% if user.is_authenticated %}
+            {% if user.profile.id %}
                 {% if request.user.id != profile.user.id %}
                     {% if request.user in profile.follower.all %}
                         <button type="submit" name="profile_id" value="{{ profile.id }}" class="btn btn-danger shadow">Unfollow</button>
@@ -16,6 +17,9 @@
                         <button type="submit" name="profile_id" value="{{ profile.id }}" class="btn btn-primary shadow">Follow</button>
                     {% endif %}
                 {% endif %}
+            {% else %} 
+            <span class="lead">You must create a profile to follow other users.</span>
+            {% endif %}
             {% endif %}
         </form>
         <br/>

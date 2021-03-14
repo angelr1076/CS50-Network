@@ -2,6 +2,7 @@
 
 {% block body %}
 <h2 class="display-4 pt-5">Create Profile</h2>
+<span class="lead">In order to add posts, please create a profile first.</span>
     <form action="{% url 'network:profile-add' %}" class="form-group pt-5" method="POST">
         {% csrf_token %}
         {{ form.as_p }}

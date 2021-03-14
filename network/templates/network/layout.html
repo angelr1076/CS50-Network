@@ -22,18 +22,22 @@
                   <a class="nav-link" href="{% url 'network:index' %}">All Posts</a>
                 </li>
                 {% if user.is_authenticated %}
+                {% if user.profile.id %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:post-add' %}">Add Post</a>
                     </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'network:profile-add' %}">Add Post</a>
+                </li>
+                {% endif %}
                     {% if user.profile.id %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:follow-posts' user.profile.id %}">Following</a>
                     </li>
-                    {% if user.profile.id %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:profile-detail' user.profile.id %}"> View Profile</a>
                     </li>
-                    {% endif %}
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:profile-add' %}">Create Profile</a>
