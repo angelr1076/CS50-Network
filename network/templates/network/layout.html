@@ -29,9 +29,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:follow-posts' user.profile.id %}">Following</a>
                     </li>
-                    <!-- <li class="nav-item">
+                    {% if user.profile.id %}
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:profile-detail' user.profile.id %}"> View Profile</a>
-                    </li> -->
+                    </li>
+                    {% endif %}
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:profile-add' %}">Create Profile</a>
