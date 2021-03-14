@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG_VALUE")
 # DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://cs50djangonetwork.herokuapp.com/']
 
 
 # Application definition
