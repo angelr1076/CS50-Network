@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG_VALUE")
 # DEBUG = False
 
-ALLOWED_HOSTS = ['https://cs50djangonetwork.herokuapp.com/']
+ALLOWED_HOSTS = ['cs50djangonetwork.herokuapp.com']
 
 
 # Application definition
@@ -138,3 +138,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+django_heroku.settings(locals())
