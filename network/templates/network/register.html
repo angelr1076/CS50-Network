@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2>Register</h2>
+    <h2 class="pt-3">Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -13,18 +13,23 @@
         <div class="form-group">
             <input class="form-control" autofocus type="text" name="username" placeholder="Username">
         </div>
+        <br>
         <div class="form-group">
             <input class="form-control" type="email" name="email" placeholder="Email Address">
         </div>
+        <br>
         <div class="form-group">
             <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
+        <br>
         <div class="form-group">
             <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
         </div>
+        <br>
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
-
+    <br>
+    <hr>
     Already have an account? <a href="{% url 'network:login' %}">Log In here.</a>
 
 {% endblock %}
